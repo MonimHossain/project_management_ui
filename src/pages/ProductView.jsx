@@ -26,7 +26,7 @@ export default function ProductView() {
         <div className="product-view">
           <Row>
             <Col className="col-border" xs={4}>
-                <h1>IMAGE</h1>
+                <img className="product-img" src={process.env.REACT_APP_BASE_URL+product.image_url}/>
             </Col>
             <Col className="col-border"  xs={8}>
                 <h3>{product.name}</h3>
