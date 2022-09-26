@@ -8,25 +8,33 @@ import {
 import "../css/Common.css";
 
 export default function TopBar() {
-  const [username, setUsername] = useState('')
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
-    setUsername(JSON.parse(localStorage.getItem("email")))
-  }, [])
+    setUsername(JSON.parse(localStorage.getItem("email")));
+  }, []);
 
   const onClickHandler = () => {
     localStorage.clear();
-    window.location.href = '/';
-  }
+    goToRoot();
+  };
+
+  const goToRoot = () => {
+    window.location.href = "/";
+  };
+
   return (
-      <Menu mode="horizontal" defaultSelectedKeys={["mail"]} >
+    <Menu mode="horizontal" defaultSelectedKeys={["mail"]}>
       <Menu.SubMenu
         key="SubMenu"
-        title={"Welcome, "+username}
+        title={"Welcome, " + username}
         icon={<SettingOutlined />}
       >
         <Menu.ItemGroup title="Action">
-          <Menu.Item key="1"  icon={<AppstoreOutlined />} >
+          <Menu.Item key="1" icon={<AppstoreOutlined />}>
+            <a onClick={goToRoot}>Home</a>
+          </Menu.Item>
+          <Menu.Item key="2" icon={<AppstoreOutlined />}>
             <a onClick={onClickHandler}>Logout</a>
           </Menu.Item>
         </Menu.ItemGroup>
