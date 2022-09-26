@@ -61,8 +61,12 @@
 }
 
 .product-img{
-    max-width: 250px;
+    max-width: 100%;
     height:auto;
     margin:2%;
     padding:2%;
+}
+
+.product-img-container{
+    max-width: 250px;
 }
