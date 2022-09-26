@@ -1,0 +1,61 @@
+.center {
+    max-width: 30%;
+    margin: auto;
+    width: 50%;
+    border: 1px solid rgb(179, 179, 179);
+    padding: 3%;
+    margin-top:5%;
+    text-align: center;
+  }
+
+.registration-form{
+    max-width: 30%;
+    margin: auto;
+    width: 50%;
+    border: 1px solid rgb(179, 179, 179);
+    padding: 2%;
+    margin-top:5%;
+    /* text-align: center; */
+}
+
+.align-center{
+    text-align: center;
+}
+
+.product-table{
+    max-width: 90%;
+    margin:auto;
+}
+
+.product-create{
+    max-width:90%;
+    padding:0 5%;
+    margin:0 5%;
+}
+
+.topbar{
+    float: right;
+}
+
+.right{
+    float: right;
+    margin-bottom: 2%;
+}
+
+.clean{
+    text-decoration: none;
+}
+
+.header-name{
+    padding: 2%;
+    text-align: center !important;
+}
+
+.product-view{
+    padding: 2%;
+    margin:2%
+}
+
+.col-border{
+    border:1px solid rgb(252, 251, 251);
+}
