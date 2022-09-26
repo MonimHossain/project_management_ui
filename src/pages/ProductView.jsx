@@ -26,13 +26,31 @@ export default function ProductView() {
         <div className="product-view">
           <Row>
             <Col className="col-border" xs={4}>
-                <img className="product-img" src={process.env.REACT_APP_BASE_URL+product.image_url}/>
+              {product.image_url ? (
+                <img
+                  className="product-img"
+                  src={process.env.REACT_APP_BASE_URL + product.image_url}
+                />
+              ) : (
+                <img
+                  className="product-img"
+                  src={process.env.REACT_APP_BASE_URL + "/bu-img.png"}
+                />
+              )}
             </Col>
-            <Col className="col-border"  xs={8}>
-                <h3>{product.name}</h3>
-                <p>{product.description}</p>
-                <p><b>Category: <i>{product.category.name}</i></b></p>
-                <p><b>Price: <i>{product.price}</i> &#2547; (BDT)</b></p>
+            <Col className="col-border" xs={8}>
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+              <p>
+                <b>
+                  Category: <i>{product.category.name}</i>
+                </b>
+              </p>
+              <p>
+                <b>
+                  Price: <i>{product.price}</i> &#2547; (BDT)
+                </b>
+              </p>
             </Col>
           </Row>
         </div>
