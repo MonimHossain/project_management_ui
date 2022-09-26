@@ -17,7 +17,7 @@ import "antd/dist/antd.css";
 import "../css/Common.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import TopBar from "../components/TopBar";
-import { getApi, postApi } from "../api/commonApi";
+import { getApi, postApi, postApiWithoutContentType } from "../api/commonApi";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -26,6 +26,8 @@ export default function CreateProduct() {
   const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categoryName, setCategoryName] = useState("");
+  const [description, setDescription] = useState("");
+  const [file, setFile] = useState("");
 
   useEffect(() => {
     loadResources();
@@ -63,26 +65,58 @@ export default function CreateProduct() {
     }
   };
 
+  const formAppendingData = (values) => {
+    const data = new FormData();
+    data.append('name', values.name);
+    data.append('sku', values.sku);
+    data.append('price', values.price);
+    data.append('description', values.description);
+    data.append('status', values.status);
+    data.append('category_id', values.category_id);
+    data.append('user_id', values.user_id);
+    data.append('image_url', values.image_url);
+    return data;
+  }
+
   const onFinish = async (values) => {
+
     const email = JSON.parse(localStorage.getItem("email"));
     const user = await getApi(`/api/user/get-user?email=${email}`);
 
     values.user_id = user.data.id; //assgin user id
 
-    if(values.status === undefined){
-        values.status = 'active';
+    if (values.status === undefined) {
+      values.status = "active";
     }
 
-    const response = await postApi('/api/product/create', values);
+    if(description){
+      values.description = description;
+    }
+
+
+    if(file){
+      values.image_url = file;
+    }
+
+    const data = formAppendingData(values)
+    
+
+    // console.log(data)
+    // return false;
+    const response = await postApiWithoutContentType("/api/product/create", data);
     if (response.error) {
-        for (let key in response.error) {
-          alert(response.error[key]);
-        }
-      } else {
-        alert(response.message);
-        window.location.href = "/";
+      for (let key in response.error) {
+        alert(response.error[key]);
       }
+    } else {
+      alert(response.message);
+      window.location.href = "/";
+    }
   };
+
+  function handleFileChange(e) {
+      setFile(e.file.originFileObj)
+  }
 
   return (
     <>
@@ -136,6 +170,7 @@ export default function CreateProduct() {
                   rows={4}
                   placeholder="Description"
                   name="description"
+                  onChange={(e)=>setDescription(e.target.value)}
                 />
               </Form.Item>
 
@@ -154,24 +189,24 @@ export default function CreateProduct() {
 
               <Form.Item label="Status" name="status">
                 <Select defaultValue="active" value="active">
-                  <Option value="active">
-                    Active
-                  </Option>
+                  <Option value="active">Active</Option>
                   <Option value="inactive">Inactive</Option>
                 </Select>
               </Form.Item>
 
-              {/* <Form.Item label="Image">
+              <Form.Item label="Image">
                 <Upload
                   accept=".png, .jpg, .jpeg"
-                  //   action={`${process.env.REACT_APP_BASE_URL}/api/courses/test-upload`}
+                  action={`${process.env.REACT_APP_BASE_URL}/api/test-upload`}
                   beforeUpload={(file) => {
                     return true;
                   }}
+                  name="image_url"
+                  onChange={(info) => handleFileChange(info)}
                 >
                   <Button icon={<UploadOutlined />}>Click to Upload</Button>
                 </Upload>
-              </Form.Item> */}
+              </Form.Item>
 
               <Button type="primary" htmlType="submit">
                 Submit

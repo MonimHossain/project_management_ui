@@ -34,6 +34,20 @@ export const postApi = async (url, data) => {
     return response;
 }
 
+export const postApiWithoutContentType = async (url, data) => {
+    const response = await fetch(baseUrl+url, {
+        method: 'POST',  
+        headers: {
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("access_token"))}`,
+        }, 
+        body: data
+      }).then((res) => res.json())
+      .then((data) => {
+          return data
+      });
+    return response;
+}
+
 export const deleteApi = async (url, data) => {
     const response = await fetch(baseUrl+url, {
         method: 'DELETE',  
